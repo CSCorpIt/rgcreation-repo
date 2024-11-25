@@ -1,10 +1,25 @@
 terraform {
-  backend "azurerm" {
-    key                  = var.azurerm_key
-    resource_group_name  = var.azurerm_resource_group_name
-    storage_account_name = var.azurerm_storage_account_name
-    container_name       = var.azurerm_container_name
+
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+      version = "~> 3.0.2"
+    }
   }
+
+
+  backend "azurerm" {
+    key                  = "terra-state"
+    resource_group_name  = "DefaultResourceGroup-EUS"
+    storage_account_name = "terraformstagh"
+    container_name       = "terradev"
+  }
+
+}
+
+
+provider "azurerm" {
+  features {}
 }
 
 locals {
@@ -20,6 +35,3 @@ resource "azurerm_resource_group" "rg" {
   name     = var.resource_group_name
   location = var.region
 }
-
-
-
